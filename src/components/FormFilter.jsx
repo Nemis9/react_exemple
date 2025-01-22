@@ -1,46 +1,55 @@
 ﻿import {Button, Form} from "react-bootstrap";
-import {useRef} from "react";
+import {useEffect, useState} from "react";
+import {nanoid} from "nanoid";
 
 export default function FormFilter({searchUsers, companies}) {
 
-    const email = useRef(null)
-    const username = useRef(null)
-    const name = useRef(null)
-    const company = useRef(null)
+    const defaultFilter = {email:"",username:"",company:"",name:""}
 
-    function handleSubmit(event) {
-        event.preventDefault()
-        searchUsers({email:email.current.value,
-            username:username.current.value,
-            name:name.current.value,
-            company:company.current.value})
+    const [filters, setFilters] = useState(defaultFilter);
+
+    useEffect(() => {
+        console.log(filters);
+        searchUsers(filters);
+    },[filters]);
+
+    function handleResetFilter() {
+        setFilters(defaultFilter);
+    }
+    function handleChange(prop, value) {
+        console.log(prop, value);
+        let _filters = {...filters}
+        console.log("prima ",_filters);
+        _filters[prop] = value;
+        console.log("dopo ",_filters);
+        setFilters(_filters);
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form>
             <Form.Group className="mb-3" controlId="email">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control ref={email} type="email" name="email"/>
+                <Form.Control value={filters.email} onChange={(e) => handleChange(e.target.name,e.target.value)} type="email" name="email" placeholder="jhon@jhon.it"/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="username">
                 <Form.Label>Username</Form.Label>
-                <Form.Control ref={username} type="text" name="username" placeholder="Jhon" />
+                <Form.Control value={filters.username} onChange={(e) => handleChange(e.target.name,e.target.value)} type="text" name="username" placeholder="Jhon" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Name</Form.Label>
-                <Form.Control ref={name} type="text" name="name" placeholder="Jhon" />
+                <Form.Label column>Name</Form.Label>
+                <Form.Control value={filters.name} onChange={(e) => handleChange(e.target.name,e.target.value)} type="text" name="name" placeholder="Jhon" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="company">
                 <Form.Label >Company</Form.Label>
-                <Form.Select ref={company} aria-label="Default select example" name="company">
+                <Form.Select value={filters.company} onChange={(e) => handleChange(e.target.name,e.target.value)} aria-label="Default select example" name="company">
                     <option value="">Open this select menu</option>
                     {companies.map(company => (
-                        <option value={company}>{company}</option>
+                        <option key={nanoid()} value={company}>{company}</option>
                     ))}
                 </Form.Select>
             </Form.Group>
-            <Button variant="primary" type="submit">
-                Submit
+            <Button variant="primary" type="button" onClick={() => handleResetFilter()}>
+                Reset
             </Button>
         </Form>
     )
