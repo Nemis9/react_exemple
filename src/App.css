@@ -1,3 +1,7 @@
 .row{
     padding-bottom: 18px;
 }
+
+.card-img-top{
+    max-width: 350px;
+}

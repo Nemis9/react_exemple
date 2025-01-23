@@ -16,21 +16,23 @@ export default function UserPage() {
 
 
     useEffect(() => {
-        fetch("https://jsonplaceholder.typicode.com/users?id="+idUser)
+        console.log("chiamata")
+        fetch(`https://jsonplaceholder.typicode.com/users/${idUser}`)
             .then(res => res.json())
             .then(data => {
-                setUser(data[0])
+                setUser(data)
             })
     }, [idUser]);
 
     useEffect(() => {
+        console.log("chiamata")
         if(user !== null){
-            fetch("https://jsonplaceholder.typicode.com/albums?userId="+user.id)
+            fetch(`https://jsonplaceholder.typicode.com/users/${user.id}/albums`)
                 .then(res => res.json())
                 .then(data => {
                     setAlbums(data)
                 })
-            fetch("https://jsonplaceholder.typicode.com/comments?email="+user.email)
+            fetch(`https://jsonplaceholder.typicode.com/comments?email=${user.mail}`)
                 .then(res => res.json())
                 .then(data => {
                     let size = data.length
@@ -39,7 +41,8 @@ export default function UserPage() {
                     let dataReverse = data.reverse()
                     setComments(dataReverse.slice(0,size))
                 })
-            fetch("https://jsonplaceholder.typicode.com/posts?userId="+idUser)
+
+            fetch(`https://jsonplaceholder.typicode.com/posts?userId=${user.id}`)
                 .then(res => res.json())
                 .then(data => {
                     let size = data.length
@@ -78,7 +81,7 @@ export default function UserPage() {
             </Row>
             <Row>
                 <h2>Albums</h2>
-                {albums.length >0 &&
+                {albums.length > 0 &&
                 <Col>
                     {albums.map(album =>
                          (<MyCard key={nanoid()} title={album.title} urlNavigate={`/album/${album.id}`}/>))
