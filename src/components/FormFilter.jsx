@@ -9,7 +9,6 @@ export default function FormFilter({searchUsers, companies}) {
     const [filters, setFilters] = useState(defaultFilter);
 
     useEffect(() => {
-        console.log(filters);
         searchUsers(filters);
     },[filters]);
 
@@ -17,11 +16,8 @@ export default function FormFilter({searchUsers, companies}) {
         setFilters(defaultFilter);
     }
     function handleChange(prop, value) {
-        console.log(prop, value);
         let _filters = {...filters}
-        console.log("prima ",_filters);
         _filters[prop] = value;
-        console.log("dopo ",_filters);
         setFilters(_filters);
     }
 
