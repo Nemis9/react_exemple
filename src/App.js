@@ -6,6 +6,7 @@ import Main from "./pages/Main";
 import { Route, Routes} from "react-router";
 import UserPage from "./pages/UserPage";
 import AlbumPage from "./pages/AlbumPage";
+import CreaUtente from "./pages/CreaUtente";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
                       <Route path="/" element={<Main />} />
                       <Route path="/user/:idUser" element={<UserPage/>} />
                       <Route path="/album/:idAlbum" element={<AlbumPage/>} />
+                      <Route path="/new-user" element={<CreaUtente/>} />
                   </Routes>
 
 

@@ -18,12 +18,10 @@ export default function AlbumPage(){
     }, [idAlbum]);
 
     useEffect(() => {
-        console.log("chiamata")
         if(album !== null){
             fetch(`https://jsonplaceholder.typicode.com/albums/${album.id}/photos`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
                     setPhotos(data)
                 })
         }

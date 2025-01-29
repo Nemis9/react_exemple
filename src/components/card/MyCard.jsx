@@ -1,12 +1,10 @@
 import {Card} from "react-bootstrap";
 import {useNavigate} from "react-router";
 
-export default function MyCard({title, subtitle, imgUrl, texts, links, urlNavigate}) {
-
-    let navigate = useNavigate();
+export default function MyCard({title, subtitle, imgUrl, texts, links, navigatePage}) {
 
     return (
-        <Card onClick={urlNavigate !== null ? () => navigate(urlNavigate) : null}>
+        <Card onClick={navigatePage !== null ? () => navigatePage() : null}>
             {imgUrl && <Card.Img variant="top" src={imgUrl} alt={title} />}
             <Card.Body>
                 <Card.Title>{title}</Card.Title>

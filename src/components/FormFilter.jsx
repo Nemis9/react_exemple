@@ -2,13 +2,14 @@
 import {useEffect, useState} from "react";
 import {nanoid} from "nanoid";
 
-export default function FormFilter({searchUsers, companies}) {
+export default function FormFilter({searchUsers, companies, setState, initialFilter}) {
 
     const defaultFilter = {email:"",username:"",company:"",name:""}
 
-    const [filters, setFilters] = useState(defaultFilter);
+    const [filters, setFilters] = useState(initialFilter !== null ? initialFilter : defaultFilter);
 
     useEffect(() => {
+        setState(filters);
         searchUsers(filters);
     },[filters]);
 

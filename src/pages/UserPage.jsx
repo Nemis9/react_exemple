@@ -1,5 +1,5 @@
 import {Col, Row} from "react-bootstrap";
-import {useParams} from "react-router";
+import {useLocation, useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {nanoid} from "nanoid";
 import MyCard from "../components/card/MyCard";
@@ -13,10 +13,9 @@ export default function UserPage() {
     const [posts,setPosts] = useState([])
     const [todos,setTodos] = useState([])
 
-
+    const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("chiamata")
         fetch(`https://jsonplaceholder.typicode.com/users/${idUser}`)
             .then(res => res.json())
             .then(data => {
@@ -25,14 +24,13 @@ export default function UserPage() {
     }, [idUser]);
 
     useEffect(() => {
-        console.log("chiamata")
         if(user !== null){
             fetch(`https://jsonplaceholder.typicode.com/users/${user.id}/albums`)
                 .then(res => res.json())
                 .then(data => {
                     setAlbums(data)
                 })
-            fetch(`https://jsonplaceholder.typicode.com/comments?email=${user.mail}`)
+            fetch(`https://jsonplaceholder.typicode.com/users/${user.id}/comments`)
                 .then(res => res.json())
                 .then(data => {
                     let size = data.length
@@ -42,7 +40,7 @@ export default function UserPage() {
                     setComments(dataReverse.slice(0,size))
                 })
 
-            fetch(`https://jsonplaceholder.typicode.com/posts?userId=${user.id}`)
+            fetch(`https://jsonplaceholder.typicode.com/users/${user.id}/posts`)
                 .then(res => res.json())
                 .then(data => {
                     let size = data.length
@@ -59,6 +57,10 @@ export default function UserPage() {
         }
 
     },[user])
+
+  function navigateAlbum(idAlbum){
+      navigate(`/album/${idAlbum}`);
+  }
 
     return (
         user && (
@@ -84,7 +86,7 @@ export default function UserPage() {
                 {albums.length > 0 &&
                 <Col>
                     {albums.map(album =>
-                         (<MyCard key={nanoid()} title={album.title} urlNavigate={`/album/${album.id}`}/>))
+                         (<MyCard key={album.id} title={album.title} navigatePage={() => navigateAlbum(album.id)}/>))
                     }
                 </Col>
                 }
@@ -94,7 +96,7 @@ export default function UserPage() {
                 <Col>
                     {
                         comments.map(comment =>
-                            (<MyCard key={nanoid()} title={comment.name	} texts={[comment.body]} />))
+                            (<MyCard key={comment.postId + "_" +comment.id} title={comment.name	} texts={[comment.body]} />))
                     }
                 </Col>
             </Row>
