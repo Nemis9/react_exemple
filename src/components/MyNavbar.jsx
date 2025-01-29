@@ -1,5 +1,5 @@
 import {Nav, Navbar} from "react-bootstrap";
-import { NavLink} from "react-router";
+import {NavLink} from "react-router";
 
 export default function MyNavbar() {
     return (

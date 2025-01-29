@@ -28,7 +28,6 @@ export default function Main(){
         return fetch("https://jsonplaceholder.typicode.com/users");
     }
     function getAllUsers() {
-        debugger;
         if(localStorage.getItem("users") === null){
             getAllUsersFromURL()
                 .then(res => res.json())

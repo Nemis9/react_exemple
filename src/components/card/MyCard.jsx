@@ -1,5 +1,4 @@
 import {Card} from "react-bootstrap";
-import {useNavigate} from "react-router";
 
 export default function MyCard({title, subtitle, imgUrl, texts, links, navigatePage}) {
 

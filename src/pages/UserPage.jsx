@@ -1,7 +1,6 @@
 import {Col, Row} from "react-bootstrap";
-import {useLocation, useNavigate, useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
-import {nanoid} from "nanoid";
 import MyCard from "../components/card/MyCard";
 
 export default function UserPage() {
@@ -73,7 +72,7 @@ export default function UserPage() {
             </Row>
             <Row>
                 <Col>
-                    <MyCard title="Address" texts={[user.address.street + user.address.suite + user.address.city, "Zip Code: " + user.address.zipcode]} />
+                    <MyCard title="Address" texts={[user.address.street +" "+ user.address.suite + " " + user.address.city, "Zip Code: " + user.address.zipcode]} />
                 </Col>
             </Row>
             <Row>
